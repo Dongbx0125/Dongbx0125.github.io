@@ -15,7 +15,7 @@ I am a PhD student at the **School of AI for Science, Peking University**, advis
 
 ### Research
 
-- **HOG WAM** — Submitted to CVPR 2027. arXiv forthcoming.
+- **HOG WAM** — arXiv forthcoming.
 - **ET-SEED: Efficient Trajectory-Level SE(3) Equivariant Diffusion Policy** — ICLR 2025. [Paper](https://arxiv.org/abs/2411.03990) · [Project](https://et-seed.github.io/) · [Code](https://github.com/yuechen0614/ET-SEED).
 
 ### Interests

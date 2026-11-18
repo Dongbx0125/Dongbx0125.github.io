@@ -24,7 +24,7 @@ GitHub Pages serves the `main` branch from the repository root. The `.nojekyll` 
 
 To change the playlist or gallery, update the `media-data` JSON block and corresponding initial HTML in `index.html`, then update the manifest. Page rendering does not depend on live API calls.
 
-When the **HOG WAM** preprint becomes available, replace `arXiv forthcoming` with its link and update the publication status. The current status is **Submitted to CVPR 2027**.
+When the **HOG WAM** preprint becomes available, replace `arXiv forthcoming` with its link.
 
 ## Gallery and player
 
@@ -40,7 +40,7 @@ The audio element has no source on initial load. Network errors display a concis
 
 - **Portrait:** supplied by Boxuan Dong; taken at Peking University on 27 March 2026. The optimized image excludes original file metadata.
 - **ET-SEED:** [paper](https://arxiv.org/abs/2411.03990), [project](https://et-seed.github.io/), and [code](https://github.com/yuechen0614/ET-SEED). The research thumbnail comes from the official project website. ICLR 2025.
-- **HOG WAM:** submitted to CVPR 2027; arXiv forthcoming. The title tile is a typographic placeholder, not a research diagram.
+- **HOG WAM:** arXiv forthcoming. The title tile is a typographic placeholder, not a research diagram.
 - **Sāya gallery:** after-training cards [2220](https://bestdori.com/info/cards/2220), [16](https://bestdori.com/info/cards/16), [1540](https://bestdori.com/info/cards/1540), [1056](https://bestdori.com/info/cards/1056), and [2414](https://bestdori.com/info/cards/2414). Card 1540 also appears in the faint hero background.
 - **Poppin’Party group image:** [A Sparkly Smile, card 491](https://bestdori.com/info/cards/491), before training; all five members are retained.
 - **Chibis:** official Bestdori sprite sheets `sd001004` through `sd005004`. Sāya decorates the portrait, Rimi the education section, Tae the research heading, Kasumi the interests heading, and Arisa the player. Arisa uses the smiling upper-right pose; the other sprites use their first poses. Sāya also supplies the header icon and favicon.
