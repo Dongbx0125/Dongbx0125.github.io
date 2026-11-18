@@ -43,7 +43,7 @@ The audio element has no source on initial load. Network errors display a concis
 - **HOG WAM:** submitted to CVPR 2027; arXiv forthcoming. The title tile is a typographic placeholder, not a research diagram.
 - **Sāya gallery:** after-training cards [2220](https://bestdori.com/info/cards/2220), [16](https://bestdori.com/info/cards/16), [1540](https://bestdori.com/info/cards/1540), [1056](https://bestdori.com/info/cards/1056), and [2414](https://bestdori.com/info/cards/2414). Card 1540 also appears in the faint hero background.
 - **Poppin’Party group image:** [A Sparkly Smile, card 491](https://bestdori.com/info/cards/491), before training; all five members are retained.
-- **Chibis:** official Bestdori sprite sheets `sd001004` through `sd005004`. Sāya decorates the portrait, Rimi the education section, Tae the research heading, Kasumi the group image, and Arisa the player. Arisa uses the smiling upper-right pose; the other sprites use their first poses. Sāya also supplies the header icon and favicon.
+- **Chibis:** official Bestdori sprite sheets `sd001004` through `sd005004`. Sāya decorates the portrait, Rimi the education section, Tae the research heading, Kasumi the interests heading, and Arisa the player. Arisa uses the smiling upper-right pose; the other sprites use their first poses. Sāya also supplies the header icon and favicon.
 - **Music, covers, and band logo:** Bestdori. Complete source URLs and the 28-song list are in `assets/bestdori-manifest.json`.
 
 BanG Dream! material is used as a personal fan tribute. Rights remain with their respective owners. This site is not affiliated with BanG Dream! or Bestdori.

@@ -773,3 +773,45 @@ h1 + .hero-bio { margin-top: 28px; }
   .playlist-search, .player-chibi, .band-photo-chibi, .empty-playlist { display: none !important; }
   .hero, .section, .journey-section { padding-block: 25px; }
 }
+
+/* The five body sprites share one scale; the header retains its small icon. */
+main { --chibi-height: 100px; }
+.hero-chibi,
+.journey-decoration img,
+.research-chibi,
+.interests-chibi,
+.player-chibi { width: auto; height: var(--chibi-height); max-width: none; object-fit: contain; }
+.interests-title-row { display: flex; align-items: center; gap: 24px; }
+.interests-chibi { flex-shrink: 0; transform: rotate(-4deg); pointer-events: none; }
+.offbeat-heading { display: grid; grid-template-columns: 1.24fr 1fr; gap: 26px; align-items: center; }
+.offbeat-heading > div { width: auto; }
+.offbeat-intro { margin-top: 12px; max-width: 570px; }
+.band-photo { width: min(100%, 340px); max-width: none; justify-self: start; align-self: center; transform: rotate(1.5deg); }
+.music-heading { min-height: var(--chibi-height); justify-content: center; padding-right: 88px; }
+.player-chibi { top: 0; right: 0; }
+@media (max-width: 1100px) {
+  .offbeat-heading { grid-template-columns: 1.15fr 1fr; gap: 30px; }
+  .band-photo { width: min(100%, 310px); }
+}
+@media (max-width: 880px) {
+  main { --chibi-height: 90px; }
+  .offbeat-heading { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .band-photo { width: min(100%, 285px); }
+  .music-heading { padding-right: 76px; }
+  .music-heading h3 { font-size: 23px; }
+}
+@media (max-width: 640px) {
+  main { --chibi-height: 86px; }
+  .journey-intro { display: flex; align-items: center; min-height: var(--chibi-height); padding-right: 85px; }
+  .journey-decoration { bottom: 0; }
+  .offbeat-heading { grid-template-columns: 1fr; gap: 25px; }
+  .interests-title-row { justify-content: space-between; padding-right: 8px; }
+  .offbeat-intro { margin-top: 12px; }
+  .band-photo { width: min(calc(100% - 16px), 330px); justify-self: center; }
+  .music-heading { padding-right: 82px; }
+  .music-heading h3 { font-size: 26px; }
+}
+@media (max-width: 370px) {
+  .music-heading h3 { font-size: 23px; }
+}
+@media print { .interests-chibi { display: none; } }
