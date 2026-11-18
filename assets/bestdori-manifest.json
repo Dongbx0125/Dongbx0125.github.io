@@ -1,0 +1,160 @@
+{
+  "source": "https://bestdori.com",
+  "characters": [
+    {
+      "characterId": 1,
+      "resource": "sd001004",
+      "image": "assets/chibi/kasumi.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/livesd/sd001004_rip/sdchara.png",
+      "width": 262,
+      "height": 308
+    },
+    {
+      "characterId": 2,
+      "resource": "sd002004",
+      "image": "assets/chibi/tae.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/livesd/sd002004_rip/sdchara.png",
+      "width": 239,
+      "height": 327
+    },
+    {
+      "characterId": 3,
+      "resource": "sd003004",
+      "image": "assets/chibi/rimi.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/livesd/sd003004_rip/sdchara.png",
+      "width": 233,
+      "height": 314
+    },
+    {
+      "characterId": 4,
+      "resource": "sd004004",
+      "image": "assets/chibi/saya.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/livesd/sd004004_rip/sdchara.png",
+      "width": 257,
+      "height": 340
+    },
+    {
+      "characterId": 5,
+      "resource": "sd005004",
+      "image": "assets/chibi/arisa.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/livesd/sd005004_rip/sdchara.png",
+      "width": 210,
+      "height": 340
+    }
+  ],
+  "slides": [
+    {
+      "id": 2220,
+      "title": "A Hand Reached Out",
+      "source": "https://bestdori.com/info/cards/2220",
+      "image": "assets/gallery/saya-2220.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004074_rip/card_after_training.png",
+      "width": 1331,
+      "height": 1000
+    },
+    {
+      "id": 16,
+      "title": "Matching Scrunchies",
+      "source": "https://bestdori.com/info/cards/16",
+      "image": "assets/gallery/saya-16.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004004_rip/card_after_training.png",
+      "width": 1331,
+      "height": 1000
+    },
+    {
+      "id": 1540,
+      "title": "Waving at the Sun",
+      "source": "https://bestdori.com/info/cards/1540",
+      "image": "assets/gallery/saya-1540.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004052_rip/card_after_training.png",
+      "width": 1331,
+      "height": 1000
+    },
+    {
+      "id": 1056,
+      "title": "The Bond That Binds Us",
+      "source": "https://bestdori.com/info/cards/1056",
+      "image": "assets/gallery/saya-1056.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004037_rip/card_after_training.png",
+      "width": 1331,
+      "height": 1000
+    },
+    {
+      "id": 2414,
+      "title": "This Is My Sound!",
+      "source": "https://bestdori.com/info/cards/2414",
+      "image": "assets/gallery/saya-2414.webp",
+      "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004080_rip/card_after_training.png",
+      "width": 1331,
+      "height": 1000
+    }
+  ],
+  "tracks": [
+    {
+      "id": 2,
+      "title": "Star Beat!",
+      "artist": "Poppin’Party",
+      "duration": 132.816,
+      "audio": "https://bestdori.com/assets/jp/sound/bgm002_rip/bgm002.mp3",
+      "source": "https://bestdori.com/info/songs/2",
+      "image": "assets/music/2.webp",
+      "imageSource": "https://bestdori.com/assets/jp/musicjacket/musicjacket10_rip/assets-star-forassetbundle-startapp-musicjacket-musicjacket10-star_beat-jacket.png",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "id": 4,
+      "title": "Tear Drops",
+      "artist": "Poppin’Party",
+      "duration": 150.312,
+      "audio": "https://bestdori.com/assets/jp/sound/bgm004_rip/bgm004.mp3",
+      "source": "https://bestdori.com/info/songs/4",
+      "image": "assets/music/4.webp",
+      "imageSource": "https://bestdori.com/assets/jp/musicjacket/musicjacket10_rip/assets-star-forassetbundle-startapp-musicjacket-musicjacket10-teardrop-jacket.png",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "id": 73,
+      "title": "Time Lapse",
+      "artist": "Poppin’Party",
+      "duration": 123.816,
+      "audio": "https://bestdori.com/assets/jp/sound/bgm073_rip/bgm073.mp3",
+      "source": "https://bestdori.com/info/songs/73",
+      "image": "assets/music/73.webp",
+      "imageSource": "https://bestdori.com/assets/jp/musicjacket/musicjacket80_rip/assets-star-forassetbundle-startapp-musicjacket-musicjacket80-073_time_lapse-jacket.png",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "id": 95,
+      "title": "CiRCLING",
+      "artist": "Poppin’Party",
+      "duration": 120.048,
+      "audio": "https://bestdori.com/assets/jp/sound/bgm095_rip/bgm095.mp3",
+      "source": "https://bestdori.com/info/songs/95",
+      "image": "assets/music/95.webp",
+      "imageSource": "https://bestdori.com/assets/jp/musicjacket/musicjacket100_rip/assets-star-forassetbundle-startapp-musicjacket-musicjacket100-095_circling-jacket.png",
+      "width": 384,
+      "height": 384
+    },
+    {
+      "id": 45,
+      "title": "Sunflower Dreams",
+      "artist": "Poppin’Party",
+      "duration": 128.856,
+      "audio": "https://bestdori.com/assets/jp/sound/bgm045_rip/bgm045.mp3",
+      "source": "https://bestdori.com/info/songs/45",
+      "image": "assets/music/45.webp",
+      "imageSource": "https://bestdori.com/assets/jp/musicjacket/musicjacket50_rip/assets-star-forassetbundle-startapp-musicjacket-musicjacket50-sunflower-jacket.png",
+      "width": 384,
+      "height": 384
+    }
+  ],
+  "logo": {
+    "image": "assets/poppinparty-logo.webp",
+    "imageSource": "https://bestdori.com/assets/jp/band/logo/001_rip/logoL.png",
+    "width": 432,
+    "height": 88
+  }
+}
