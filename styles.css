@@ -150,10 +150,6 @@ a.school-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .offbeat-section { padding-top: 84px; }
 .offbeat-heading { align-items: center; margin-bottom: 11px; }
 .offbeat-heading h2 { font-size: 40px; }
-.band-lineup { display: flex; align-items: flex-end; gap: 0; flex-shrink: 0; padding-right: 2px; }
-.band-lineup img { width: 51px; height: 77px; object-fit: contain; object-position: bottom; transition: transform .22s; }
-.band-lineup img:hover { transform: translateY(-5px); }
-.band-lineup img:nth-child(4) { width: 56px; height: 84px; }
 .offbeat-intro { color: #7b8570; font-size: 12px; line-height: 1.9; max-width: 730px; margin-bottom: 31px; }
 .offbeat-intro strong { font-weight: 500; color: #4f5f40; }
 .offbeat-grid { display: grid; grid-template-columns: 1.27fr 1fr; gap: 26px; align-items: stretch; }
@@ -281,8 +277,6 @@ input[type="range"]:disabled { opacity: .55; }
   .button { padding-inline: 17px; gap: 20px; }
   .research-item { grid-template-columns: 255px 1fr; gap: 28px; }
   .offbeat-heading h2 { font-size: 36px; }
-  .band-lineup img { width: 44px; height: 67px; }
-  .band-lineup img:nth-child(4) { width: 49px; height: 74px; }
   .offbeat-grid { grid-template-columns: 1.15fr 1fr; gap: 22px; }
   .music-card { padding: 25px 24px 21px; }
   .gallery-heading { padding-inline: 25px; }
@@ -331,8 +325,6 @@ input[type="range"]:disabled { opacity: .55; }
   .journey-intro h2 { font-size: 35px; }
   .offbeat-heading { align-items: flex-end; }
   .offbeat-heading h2 { font-size: 33px; max-width: 370px; }
-  .band-lineup img { width: 34px; height: 54px; }
-  .band-lineup img:nth-child(4) { width: 39px; height: 61px; }
   .offbeat-grid { gap: 18px; grid-template-columns: 1fr 1fr; }
   .gallery-heading { padding: 24px 21px; }
   .gallery-heading h3 { font-size: 25px; }
@@ -425,9 +417,6 @@ input[type="range"]:disabled { opacity: .55; }
   .desktop-break { display: none; }
   .offbeat-heading { align-items: flex-start; flex-direction: column; gap: 21px; margin-bottom: 17px; }
   .offbeat-heading h2 { font-size: 33px; max-width: 100%; }
-  .band-lineup { align-self: center; gap: 7px; }
-  .band-lineup img { width: 46px; height: 65px; }
-  .band-lineup img:nth-child(4) { width: 51px; height: 71px; }
   .offbeat-intro { font-size: 12px; line-height: 1.9; margin-bottom: 25px; }
   .offbeat-grid { grid-template-columns: 1fr; gap: 25px; }
   .gallery-heading { padding: 24px; }
@@ -515,3 +504,62 @@ input[type="range"]:disabled { opacity: .55; }
   .vinyl { animation: none; }
   .offbeat-section { break-before: page; }
 }
+
+/* Official sprites are individual accents; the band is represented by one group photo. */
+.offbeat-heading { align-items: center; gap: 60px; margin-bottom: 34px; }
+.offbeat-heading > div { flex: 1; min-width: 0; }
+.offbeat-heading h2 { max-width: 620px; }
+.offbeat-intro { margin: 20px 0 0; max-width: 610px; }
+.band-photo { width: 294px; flex: 0 0 294px; padding: 8px 8px 0; background: #fffefa; border: 1px solid #e5decc; border-radius: 5px; box-shadow: 0 8px 23px #5c47120c; transform: rotate(2deg); }
+.band-photo > a { display: block; overflow: hidden; border-radius: 2px; }
+.band-photo img { width: 100%; height: auto; }
+.band-photo figcaption { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 3px 11px; }
+.band-photo figcaption > span { font: italic 11px var(--serif); color: #82785e; }
+.band-photo figcaption a { font-size: 7px; color: #a2936d; }
+.band-photo figcaption a:hover { color: #736847; }
+.research-aside { display: flex; align-items: center; gap: 17px; }
+.research-chibi { width: 55px; height: 76px; object-fit: contain; transform: rotate(5deg); }
+.journey-decoration { margin-top: 21px; }
+.journey-decoration img { width: 69px; height: 88px; object-fit: contain; transform: rotate(-5deg); }
+.hello-section > div { position: relative; padding-right: 96px; }
+.hello-chibi { position: absolute; width: 66px; height: 102px; object-fit: contain; right: 0; bottom: -4px; transform: rotate(5deg); }
+@media (max-width: 1100px) {
+  .offbeat-heading { gap: 35px; }
+  .band-photo { width: 260px; flex-basis: 260px; }
+  .research-aside { gap: 12px; }
+  .research-chibi { width: 48px; height: 68px; }
+}
+@media (max-width: 880px) {
+  .offbeat-heading { gap: 28px; }
+  .band-photo { width: 226px; flex-basis: 226px; }
+  .band-photo figcaption { gap: 5px; }
+  .band-photo figcaption > span { font-size: 10px; }
+  .band-photo figcaption a { font-size: 6px; }
+  .offbeat-heading h2 { max-width: 400px; }
+  .offbeat-intro { font-size: 11px; }
+  .hello-section > div { padding-right: 73px; }
+  .hello-chibi { width: 55px; height: 85px; }
+}
+@media (max-width: 640px) {
+  .offbeat-heading { flex-direction: column; gap: 25px; margin-bottom: 30px; }
+  .offbeat-heading > div { flex: auto; width: 100%; }
+  .offbeat-heading h2 { max-width: 100%; }
+  .offbeat-intro { font-size: 12px; margin-top: 18px; }
+  .band-photo { width: calc(100% - 16px); max-width: 380px; flex: none; align-self: center; }
+  .band-photo figcaption { padding-block: 12px; }
+  .band-photo figcaption > span { font-size: 12px; }
+  .band-photo figcaption a { font-size: 8px; }
+  .research-aside { gap: 8px; }
+  .research-chibi { width: 42px; height: 59px; }
+  .research-aside .section-aside { font-size: 7px; }
+  .journey-decoration { display: block; position: absolute; right: 0; bottom: 0; margin: 0; }
+  .journey-intro { position: relative; padding-right: 62px; }
+  .journey-decoration img { width: 52px; height: 72px; }
+  .hello-section > div { padding-right: 68px; }
+  .hello-chibi { width: 51px; height: 80px; }
+}
+@media (max-width: 370px) {
+  .research-aside .section-aside { display: none; }
+  .hello-section h2 { font-size: 30px; }
+}
+@media print { .research-chibi, .journey-decoration, .hello-chibi { display: none; } .band-photo { transform: none; } }

@@ -156,5 +156,15 @@
     "imageSource": "https://bestdori.com/assets/jp/band/logo/001_rip/logoL.png",
     "width": 432,
     "height": 88
+  },
+  "bandPhoto": {
+    "id": 491,
+    "title": "A Sparkly Smile",
+    "version": "Before training",
+    "image": "assets/poppinparty-together.webp",
+    "source": "https://bestdori.com/info/cards/491",
+    "imageSource": "https://bestdori.com/assets/jp/characters/resourceset/res004019_rip/card_normal.png",
+    "width": 959,
+    "height": 720
   }
 }
