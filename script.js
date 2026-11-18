@@ -77,7 +77,6 @@ async function showSlide(requested, manual = false) {
     dots[i].setAttribute("aria-pressed", String(i === index));
   });
   const info = media.slides[index];
-  document.getElementById("art-title").textContent = info.title;
   document.getElementById("art-source").href = info.source;
   if (manual) document.getElementById("gallery-announcement").textContent = info.title;
   warmSlide((index + 1) % slides.length);
@@ -119,33 +118,42 @@ if ("IntersectionObserver" in window) {
 } else { galleryVisible = true; syncRotation(); }
 syncRotation();
 
-// Music is streamed from Bestdori only after user interaction; the audio element
-// remains source-free on initial load. Keeping one element prevents overlap.
+// One shared audio element serves the header and full player. No audio is
+// requested until the visitor explicitly presses play or selects a song.
 const tracks = media.tracks;
 const audio = document.getElementById("music-audio");
 const musicCard = document.querySelector(".music-card");
-const playButton = document.getElementById("music-play");
+const headerPlayer = document.querySelector(".header-player");
+const playButtons = ["music-play", "header-play"].map(id => document.getElementById(id));
+const muteButtons = ["music-mute", "header-mute"].map(id => document.getElementById(id));
 const seek = document.getElementById("music-seek");
 const volume = document.getElementById("music-volume");
-const muteButton = document.getElementById("music-mute");
 const message = document.getElementById("player-message");
-const trackButtons = [...document.querySelectorAll(".track-button")];
-const playbackState = document.getElementById("playback-state");
+const playlist = document.getElementById("song-list");
+const trackButtons = [...playlist.querySelectorAll(".track-button")];
 let trackIndex = 0;
 let playerRequest = 0;
 let playRequested = false;
+let loading = false;
 let seeking = false;
-let waitingForSeek = false;
 let lastNonzeroVolume = .65;
 
 musicCard.querySelector(".player-controls").hidden = false;
+musicCard.querySelector(".playlist-search").hidden = false;
+headerPlayer.hidden = false;
 audio.volume = .65;
 
+function setMessage(text = "") {
+  message.textContent = text;
+  message.hidden = !text;
+}
 function formatTime(seconds) {
   const value = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
   return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
 }
-function duration() { return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : tracks[trackIndex].duration; }
+function duration() {
+  return Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : tracks[trackIndex].duration;
+}
 function updateProgress() {
   const total = duration();
   if (!seeking) {
@@ -158,11 +166,17 @@ function updateProgress() {
 }
 function updatePlayback() {
   const playing = !audio.paused && !audio.ended;
-  musicCard.classList.toggle("is-playing", playing);
-  if (!playing) musicCard.classList.remove("is-loading");
-  playButton.setAttribute("aria-pressed", String(playing || playRequested));
-  playButton.setAttribute("aria-label", playing || playRequested ? "Pause music" : `Play ${tracks[trackIndex].title}`);
-  playbackState.textContent = playing ? "NOW PLAYING" : audio.currentTime > 0 ? "TAKING A BREATHER" : "READY WHEN YOU ARE";
+  for (const surface of [musicCard, headerPlayer]) {
+    surface.classList.toggle("is-playing", playing);
+    surface.classList.toggle("is-loading", loading && playRequested);
+  }
+  for (const button of playButtons) {
+    button.setAttribute("aria-pressed", String(playRequested));
+    button.setAttribute("aria-label", playRequested ? "Pause music" : `Play ${tracks[trackIndex].title}`);
+  }
+  trackButtons.forEach((button, index) => button.setAttribute("aria-label",
+    index === trackIndex && playRequested ? `Pause ${tracks[index].title}` : `Play ${tracks[index].title}`));
+  if ("mediaSession" in navigator) navigator.mediaSession.playbackState = playing ? "playing" : "paused";
 }
 function updateMediaSession() {
   if (!("mediaSession" in navigator) || !("MediaMetadata" in window)) return;
@@ -172,53 +186,71 @@ function updateMediaSession() {
     artwork: [{ src: new URL(track.image, document.baseURI).href, sizes: "384x384", type: "image/webp" }]
   });
 }
+function revealSelection() {
+  const row = trackButtons[trackIndex];
+  if (row.parentElement.hidden) return;
+  const bounds = playlist.getBoundingClientRect();
+  const selected = row.getBoundingClientRect();
+  if (selected.top < bounds.top) playlist.scrollTop += selected.top - bounds.top;
+  else if (selected.bottom > bounds.bottom) playlist.scrollTop += selected.bottom - bounds.bottom;
+}
 function resetDisplay() {
   const track = tracks[trackIndex];
   document.getElementById("track-title").textContent = track.title;
-  const cover = document.getElementById("track-cover"); cover.src = track.image; cover.alt = `${track.title} cover art`;
+  document.getElementById("header-track-title").textContent = track.title;
+  const cover = document.getElementById("track-cover");
+  cover.src = track.image;
+  cover.alt = `${track.title} cover art`;
   document.getElementById("song-source").href = track.source;
   trackButtons.forEach((button, index) => {
     button.classList.toggle("is-selected", index === trackIndex);
     if (index === trackIndex) button.setAttribute("aria-current", "true");
     else button.removeAttribute("aria-current");
   });
-  seek.value = 0; seek.disabled = true; seeking = false; waitingForSeek = false;
-  seek.style.setProperty("--progress", "0%");
-  document.getElementById("current-time").textContent = "0:00";
-  document.getElementById("total-time").textContent = formatTime(track.duration);
-  seek.setAttribute("aria-valuetext", `0:00 of ${formatTime(track.duration)}`);
+  seeking = false;
+  seek.disabled = true;
+  updateProgress();
   updatePlayback();
+  revealSelection();
 }
 function failPlayback() {
+  ++playerRequest;
   playRequested = false;
-  musicCard.classList.remove("is-loading"); updatePlayback();
-  playbackState.textContent = "LET’S TRY THAT AGAIN";
-  message.textContent = "This track could not load. Retry, choose another, or listen on Bestdori.";
+  loading = false;
+  audio.pause();
+  updatePlayback();
+  setMessage("Unable to load this track. Press play to retry, or listen on Bestdori.");
 }
 function pauseMusic() {
-  ++playerRequest; playRequested = false; audio.pause(); updatePlayback();
-  message.textContent = "Paused. Pick up whenever you like.";
+  ++playerRequest;
+  playRequested = false;
+  loading = false;
+  audio.pause();
+  updatePlayback();
+  setMessage();
 }
 async function playMusic() {
   const request = ++playerRequest;
-  playRequested = true; musicCard.classList.add("is-loading");
-  playButton.setAttribute("aria-pressed", "true"); playButton.setAttribute("aria-label", "Pause music");
-  message.textContent = "Loading music…";
+  playRequested = true;
+  loading = true;
+  setMessage();
   if (!audio.getAttribute("src") || audio.error) {
     audio.src = tracks[trackIndex].audio;
     audio.load();
   }
   if (audio.ended) audio.currentTime = 0;
   updateMediaSession();
+  updatePlayback();
   try {
     await audio.play();
     if (request !== playerRequest) return;
-    musicCard.classList.remove("is-loading");
-    message.textContent = "A little music, while you explore.";
+    loading = false;
     updatePlayback();
   } catch (error) {
-    if (request !== playerRequest || error.name === "AbortError") return;
-    failPlayback();
+    if (request !== playerRequest) return;
+    // An interrupted request must not leave either control showing playback.
+    if (error.name === "AbortError") pauseMusic();
+    else failPlayback();
   }
 }
 function selectTrack(requested, autoplay = false) {
@@ -227,36 +259,53 @@ function selectTrack(requested, autoplay = false) {
     if (autoplay) playMusic();
     return;
   }
-  ++playerRequest; playRequested = false; audio.pause();
-  audio.removeAttribute("src"); audio.load();
-  trackIndex = index; resetDisplay();
-  message.textContent = "Press play for a little background music.";
+  ++playerRequest;
+  playRequested = false;
+  loading = false;
+  audio.pause();
+  audio.removeAttribute("src");
+  audio.load();
+  trackIndex = index;
+  resetDisplay();
+  setMessage();
   if (autoplay) playMusic();
 }
-
-playButton.addEventListener("click", () => { if (playRequested || !audio.paused) pauseMusic(); else playMusic(); });
+function togglePlayback() {
+  if (playRequested) pauseMusic();
+  else playMusic();
+}
+playButtons.forEach(button => button.addEventListener("click", togglePlayback));
 trackButtons.forEach((button, index) => button.addEventListener("click", () => {
-  if (index === trackIndex && (playRequested || !audio.paused)) pauseMusic();
+  if (index === trackIndex && playRequested) pauseMusic();
   else selectTrack(index, true);
 }));
-document.getElementById("music-prev").addEventListener("click", () => selectTrack(trackIndex - 1, playRequested || !audio.paused));
-document.getElementById("music-next").addEventListener("click", () => selectTrack(trackIndex + 1, playRequested || !audio.paused));
+for (const prefix of ["music", "header"]) {
+  document.getElementById(`${prefix}-prev`).addEventListener("click", () => selectTrack(trackIndex - 1, playRequested));
+  document.getElementById(`${prefix}-next`).addEventListener("click", () => selectTrack(trackIndex + 1, playRequested));
+}
 audio.addEventListener("loadedmetadata", () => { seek.disabled = false; updateProgress(); });
 audio.addEventListener("durationchange", updateProgress);
 audio.addEventListener("timeupdate", updateProgress);
 audio.addEventListener("playing", () => {
-  musicCard.classList.remove("is-loading"); message.textContent = "A little music, while you explore."; updatePlayback();
-});
-audio.addEventListener("pause", () => {
-  if (!waitingForSeek) playRequested = false;
+  if (!playRequested) { audio.pause(); return; }
+  loading = false;
+  setMessage();
   updatePlayback();
 });
-audio.addEventListener("waiting", () => { if (playRequested) { musicCard.classList.add("is-loading"); message.textContent = "Buffering music…"; } });
-audio.addEventListener("error", () => { if (audio.getAttribute("src")) failPlayback(); });
+audio.addEventListener("pause", () => {
+  // Source changes enqueue a pause event; it must not cancel the next song.
+  if (audio.paused && !loading && !audio.ended) playRequested = false;
+  updatePlayback();
+});
+audio.addEventListener("waiting", () => {
+  if (playRequested && !audio.paused) { loading = true; updatePlayback(); }
+});
+audio.addEventListener("error", () => { if (audio.getAttribute("src") && audio.error) failPlayback(); });
 audio.addEventListener("ended", () => {
   playRequested = false;
+  loading = false;
   if (trackIndex < tracks.length - 1) selectTrack(trackIndex + 1, true);
-  else { updatePlayback(); playbackState.textContent = "THANKS FOR LISTENING"; message.textContent = "That’s the playlist. Pick a song to listen again."; }
+  else updatePlayback();
 });
 seek.addEventListener("input", () => {
   seeking = true;
@@ -266,40 +315,59 @@ seek.addEventListener("input", () => {
   seek.setAttribute("aria-valuetext", `${formatTime(time)} of ${formatTime(duration())}`);
 });
 seek.addEventListener("change", () => {
-  const time = Number(seek.value) / 1000 * duration();
-  waitingForSeek = true;
-  try { audio.currentTime = time; } catch { message.textContent = "This part of the track is not ready yet."; }
-  seeking = false; updateProgress();
+  try { audio.currentTime = Number(seek.value) / 1000 * duration(); }
+  catch { setMessage("This part of the track has not loaded yet."); }
+  seeking = false;
+  updateProgress();
 });
-audio.addEventListener("seeked", () => { waitingForSeek = false; updateProgress(); });
+audio.addEventListener("seeked", updateProgress);
 function updateVolume() {
   const silent = audio.muted || audio.volume === 0;
   volume.value = Math.round(audio.volume * 100);
   volume.style.setProperty("--progress", `${volume.value}%`);
   volume.setAttribute("aria-valuetext", `${volume.value} percent`);
-  muteButton.setAttribute("aria-pressed", String(silent));
-  muteButton.setAttribute("aria-label", silent ? "Unmute music" : "Mute music");
+  for (const button of muteButtons) {
+    button.setAttribute("aria-pressed", String(silent));
+    button.setAttribute("aria-label", silent ? "Unmute music" : "Mute music");
+  }
 }
 volume.addEventListener("input", () => {
   audio.volume = Number(volume.value) / 100;
   if (audio.volume > 0) { lastNonzeroVolume = audio.volume; audio.muted = false; }
   updateVolume();
 });
-muteButton.addEventListener("click", () => {
+muteButtons.forEach(button => button.addEventListener("click", () => {
   if (audio.volume === 0) { audio.volume = lastNonzeroVolume; audio.muted = false; }
   else audio.muted = !audio.muted;
   updateVolume();
-});
+}));
 audio.addEventListener("volumechange", updateVolume);
+const normalize = text => text.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+document.getElementById("song-search").addEventListener("input", event => {
+  const query = normalize(event.target.value.trim());
+  let matches = 0;
+  trackButtons.forEach((button, index) => {
+    const match = normalize(tracks[index].title).includes(query);
+    button.parentElement.hidden = !match;
+    if (match) ++matches;
+  });
+  document.getElementById("empty-playlist").hidden = matches > 0;
+  playlist.scrollTop = 0;
+});
 if ("mediaSession" in navigator) {
   const actions = {
     play: playMusic, pause: pauseMusic,
     previoustrack: () => selectTrack(trackIndex - 1, true),
     nexttrack: () => selectTrack(trackIndex + 1, true),
-    seekto: (details) => { if (Number.isFinite(details.seekTime)) audio.currentTime = details.seekTime; }
+    seekto: details => {
+      if (Number.isFinite(details.seekTime) && !seek.disabled) audio.currentTime = details.seekTime;
+    }
   };
-  Object.entries(actions).forEach(([action, handler]) => { try { navigator.mediaSession.setActionHandler(action, handler); } catch { /* Unsupported action. */ } });
+  Object.entries(actions).forEach(([action, handler]) => {
+    try { navigator.mediaSession.setActionHandler(action, handler); } catch { /* Unsupported action. */ }
+  });
 }
 window.addEventListener("pagehide", () => { pauseMusic(); clearInterval(galleryTimer); });
 window.addEventListener("pageshow", syncRotation);
 updateVolume();
+updatePlayback();

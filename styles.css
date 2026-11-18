@@ -563,3 +563,213 @@ input[type="range"]:disabled { opacity: .55; }
   .hello-section h2 { font-size: 30px; }
 }
 @media print { .research-chibi, .journey-decoration, .hello-chibi { display: none; } .band-photo { transform: none; } }
+
+/* Compact academic content and synchronized header controls. */
+.nav-shell { gap: 24px; min-height: 84px; }
+nav { margin-left: auto; gap: 26px; }
+.header-player { display: flex; align-items: center; gap: 2px; padding-left: 20px; border-left: 1px solid var(--line); }
+.header-track { width: 112px; min-width: 0; margin-right: 8px; line-height: 1.4; }
+.header-track span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-track span:first-child { font-size: 11px; color: #465539; }
+.header-track span:last-child { font-size: 9px; color: #7a856c; margin-top: 3px; }
+.header-player .icon-button { width: 31px; height: 36px; padding: 7px; }
+.header-player .music-play { width: 34px; height: 34px; margin-inline: 2px; }
+.header-player .music-play svg { width: 17px; height: 17px; }
+.header-player.is-loading .music-play svg { display: none; }
+.header-player.is-loading .player-spinner { display: block; width: 15px; height: 15px; border: 2px solid #fff5; border-top-color: white; border-radius: 50%; animation: spin-record 1s linear infinite; }
+#header-mute[aria-pressed="true"] .icon-sound { display: none; }
+#header-mute[aria-pressed="true"] .icon-muted { display: block; }
+.hero { padding-block: 76px 74px; gap: 65px; }
+h1 { margin-top: 0; }
+h1 + .hero-bio { margin-top: 28px; }
+.hero-bio { font-size: 14px; }
+.hero-bio [lang="zh-Hans"] { white-space: nowrap; }
+.hero-actions { flex-wrap: wrap; gap: 13px 25px; margin-top: 25px; }
+.hero-actions .github-link { display: inline-flex; }
+.hero-actions .github-link > span { display: inline; }
+.hero-actions .github-link svg { width: 18px; height: 18px; }
+.hero-actions .github-link > span:last-child { margin-left: 0; font-size: 14px; }
+.contact-link { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; color: #465539; }
+.contact-link:hover, .hero-actions .github-link:hover { color: #987827; }
+.email-link { flex-basis: 100%; width: fit-content; }
+.contact-link > svg { flex-shrink: 0; }
+.photo-window img { aspect-ratio: 1.4; }
+.photo-card figcaption { font: 12px/1.5 var(--sans); padding-block: 17px 20px; }
+.hero-chibi { bottom: 17px; right: -20px; width: 85px; height: 113px; }
+.journey-layout { grid-template-columns: 240px 1fr; gap: 60px; }
+.journey-section { padding-block: 52px; }
+.timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-left: 0; padding-left: 0; }
+.timeline-item { padding-left: 23px; border-left: 1px solid #ccd4bc; }
+.timeline-item + .timeline-item { margin-top: 0; }
+.timeline-node { left: -5px; }
+.timeline-node.current { left: -6px; }
+.timeline-date { color: #687958; }
+.school-link { font-size: 13px; }
+.university { color: #69795a; font-size: 12px; }
+.timeline-detail { color: #6d7b5e; font-size: 11px; }
+.section { padding-block: 63px; }
+.section-heading { margin-bottom: 26px; }
+.research-item { padding-block: 26px; }
+.research-visual { height: 165px; }
+.hog-label { height: 100%; justify-content: center; align-items: center; }
+.hog-label strong { margin: 0; font-size: 36px; line-height: 1.1; }
+.hog-label strong > span { display: inline; padding-left: 9px; }
+.etseed-visual { justify-content: center; }
+.authors { font-size: 11px; color: #6c795e; }
+.paper-description { color: #66745a; }
+.offbeat-section { padding-top: 22px; }
+.offbeat-heading { margin-bottom: 37px; }
+.offbeat-intro { font-size: 14px; color: #66735b; max-width: 580px; }
+.band-photo { position: relative; padding-bottom: 8px; }
+.band-photo .band-photo-chibi { position: absolute; width: 59px; height: 70px; object-fit: contain; right: -17px; bottom: -12px; transform: rotate(-5deg); filter: drop-shadow(0 3px 3px #413c1915); pointer-events: none; }
+.offbeat-grid { align-items: start; grid-template-columns: 1.24fr 1fr; }
+.gallery-heading { padding-block: 24px; }
+.gallery-heading h3 { margin-top: 0; font-size: 27px; }
+.gallery-bottom { padding: 15px 23px; flex-wrap: wrap; }
+.gallery-dots { margin-right: auto; }
+.rotation-button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.rotation-button { width: 31px; height: 31px; justify-content: center; padding: 6px; border: 1px solid #e0dfd2; border-radius: 50%; margin-right: 7px; }
+.music-card { display: grid; grid-template-columns: 145px minmax(0, 1fr); column-gap: 15px; padding: 24px; }
+.music-heading, .player-controls, .playlist-search, .playlist, .empty-playlist, .player-footer, .music-card noscript { grid-column: 1 / -1; }
+.music-heading { position: relative; align-items: flex-start; justify-content: flex-start; flex-direction: column; gap: 4px; padding-right: 60px; min-height: 54px; }
+.music-heading h3 { font: 26px/1.2 var(--serif); letter-spacing: -.5px; }
+.music-format { font-size: 10px; font-weight: 400; letter-spacing: 0; border: none; padding: 0; color: #6d7f58; }
+.player-chibi { position: absolute; right: -1px; top: -6px; width: 52px; height: 68px; object-fit: contain; transform: rotate(3deg); }
+.record-stage { width: 143px; height: 114px; max-width: 100%; margin: 23px 0 20px; }
+.record-sleeve { width: 109px; height: 109px; padding: 4px; }
+.vinyl { width: 104px; height: 104px; top: 3px; }
+.vinyl-label { width: 45px; height: 45px; gap: 5px; border-width: 2px; }
+.vinyl-label img { width: 34px; }
+.vinyl-label > span { width: 4px; height: 4px; }
+.now-playing { align-self: center; margin-block: 12px; min-width: 0; }
+.now-playing h4 { font-size: 24px; margin: 0; overflow-wrap: anywhere; }
+.now-playing p { font-size: 11px; color: #6f805d; }
+.seek-row { margin-top: 0; }
+.playback-times { color: #6a7c55; font-size: 10px; }
+.playlist-search { margin-top: 23px; }
+#song-search { width: 100%; border: 1px solid #ccd7be; background: #f9fbf2c9; border-radius: 5px; padding: 9px 12px; color: #465b34; font-size: 12px; }
+#song-search::placeholder { color: #78876a; }
+.playlist { max-height: 239px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #b9c7a6 transparent; margin-top: 10px; padding: 3px; }
+.track-button { min-height: 52px; }
+.playlist-title { font-size: 12px; }
+.track-duration { font-size: 10px; }
+.empty-playlist { font-size: 12px; padding-block: 17px; color: #6c7c5b; }
+.player-footer { justify-content: flex-end; margin-top: 13px; font-size: 10px; }
+.player-footer a { color: #62784c; }
+.site-footer { border-top: 1px solid var(--line); }
+.footer-main { font-size: 11px; }
+.art-credit { font-size: 10px; color: #808c71; }
+@media (max-width: 1100px) {
+  .nav-shell { gap: 20px; }
+  nav { gap: 20px; }
+  .header-track { width: 94px; }
+  .header-player { padding-left: 15px; }
+  .hero { gap: 43px; padding-block: 62px; }
+  .journey-layout { grid-template-columns: 200px 1fr; gap: 40px; }
+  .timeline { gap: 28px; }
+  .music-card { grid-template-columns: 125px minmax(0, 1fr); padding: 23px; gap: 0 14px; }
+  .record-stage { width: 125px; height: 100px; }
+  .record-sleeve { width: 96px; height: 96px; }
+  .vinyl { width: 91px; height: 91px; }
+  .now-playing h4 { font-size: 22px; }
+}
+@media (max-width: 880px) {
+  .nav-shell { gap: 15px; }
+  nav { gap: 16px; }
+  .header-track { display: none; }
+  .header-player { padding-left: 12px; }
+  .hero { gap: 30px; }
+  .hero-bio { font-size: 13px; }
+  .photo-window img { aspect-ratio: 1.06; }
+  .photo-card figcaption { font-size: 10px; }
+  .hero-chibi { width: 73px; height: 97px; }
+  .journey-layout { grid-template-columns: 180px 1fr; gap: 35px; }
+  .timeline { grid-template-columns: 1fr; gap: 28px; }
+  .offbeat-intro { font-size: 13px; }
+  .offbeat-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .music-card { grid-template-columns: 99px minmax(0, 1fr); padding: 21px 18px; gap: 0 12px; }
+  .music-heading h3 { font-size: 24px; }
+  .record-stage { width: 99px; height: 86px; }
+  .record-sleeve { width: 80px; height: 80px; }
+  .vinyl { width: 77px; height: 77px; }
+  .vinyl-label { width: 37px; height: 37px; }
+  .vinyl-label img { width: 28px; }
+  .now-playing h4 { font-size: 20px; }
+  .playlist-title { font-size: 11px; }
+  .gallery-bottom { padding-inline: 14px; gap: 7px; }
+  .gallery-heading h3 { font-size: 24px; }
+  .rotation-button { margin-right: 0; }
+}
+@media (max-width: 640px) {
+  html { scroll-padding-top: 120px; }
+  .nav-shell { display: grid; grid-template-columns: 1fr auto; column-gap: 7px; row-gap: 0; padding-top: 6px; min-height: 99px; }
+  .brand { gap: 7px; }
+  .brand > span { font-size: 15px; }
+  .brand-chibi { width: 31px; height: 43px; }
+  nav { grid-column: 1 / -1; grid-row: 2; justify-self: center; margin: 0; gap: 35px; }
+  nav a { font-size: 11px; padding-block: 6px 13px; }
+  nav a::after { bottom: 7px; }
+  .header-player { grid-column: 2; grid-row: 1; border: 0; padding-left: 0; gap: 0; }
+  .header-player .icon-button { width: 29px; padding: 6px; }
+  .header-player .music-play { width: 32px; height: 32px; }
+  .hero { padding-block: 43px 48px; gap: 32px; }
+  h1 { font-size: 54px; margin-top: 0; }
+  h1 + .hero-bio { margin-top: 23px; }
+  .hero-bio { font-size: 14px; line-height: 1.85; }
+  .hero-actions { flex-wrap: wrap; gap: 13px 23px; }
+  .hero-actions .github-link, .contact-link { font-size: 12px; }
+  .hero-visual { margin-top: 2px; }
+  .photo-window img { aspect-ratio: 1.5; }
+  .photo-card figcaption { font-size: 10px; padding-block: 15px 19px; }
+  .hero-chibi { width: 73px; height: 97px; right: -16px; bottom: 0; }
+  .journey-section { padding-block: 41px; }
+  .journey-layout { grid-template-columns: 1fr; gap: 33px; }
+  .journey-intro { padding-right: 62px; }
+  .journey-decoration { display: block; right: 7px; bottom: -7px; }
+  .journey-decoration img { width: 48px; height: 65px; }
+  .timeline { margin-left: 5px; gap: 28px; }
+  .section { padding-block: 43px; }
+  .research-visual { height: 160px; }
+  .research-item { gap: 21px; }
+  .offbeat-section { padding-top: 7px; }
+  .offbeat-heading { gap: 27px; margin-bottom: 33px; }
+  .offbeat-intro { font-size: 13px; }
+  .band-photo { width: calc(100% - 27px); }
+  .band-photo .band-photo-chibi { width: 52px; height: 63px; right: -16px; bottom: -11px; }
+  .offbeat-grid { grid-template-columns: 1fr; gap: 25px; }
+  .gallery-heading { padding: 23px; }
+  .gallery-bottom { padding: 13px 18px; }
+  .gallery-dot { width: 26px; }
+  .music-card { padding: 23px; grid-template-columns: 130px minmax(0, 1fr); gap: 0 16px; }
+  .music-heading h3 { font-size: 26px; }
+  .record-stage { width: 130px; height: 107px; }
+  .record-sleeve { width: 103px; height: 103px; }
+  .vinyl { width: 98px; height: 98px; }
+  .vinyl-label { width: 43px; height: 43px; }
+  .vinyl-label img { width: 32px; }
+  .now-playing h4 { font-size: 23px; }
+  .playlist-title { font-size: 12px; }
+  .track-duration { font-size: 10px; }
+  .player-footer { margin-top: 14px; }
+  .footer-main { font-size: 10px; }
+  .art-credit { font-size: 9px; }
+}
+@media (max-width: 370px) {
+  .brand > span { font-size: 13px; }
+  .brand-chibi { width: 26px; height: 38px; }
+  .header-player .icon-button { width: 27px; }
+  .header-player .music-play { width: 30px; height: 30px; }
+  h1 { font-size: 47px; }
+  .hero-bio { font-size: 13px; }
+  .photo-card figcaption { font-size: 9px; }
+  .music-card { grid-template-columns: 104px minmax(0, 1fr); padding-inline: 19px; gap: 0 15px; }
+  .record-stage { width: 104px; height: 91px; }
+  .record-sleeve { width: 87px; height: 87px; }
+  .vinyl { width: 82px; height: 82px; }
+  .now-playing h4 { font-size: 21px; }
+}
+@media print {
+  .hero-actions { display: flex !important; }
+  .playlist-search, .player-chibi, .band-photo-chibi, .empty-playlist { display: none !important; }
+  .hero, .section, .journey-section { padding-block: 25px; }
+}

@@ -1,58 +1,55 @@
-# Boxuan Dong · Research & Rhythm
+# Boxuan Dong · Peking University
 
-Personal academic homepage for **Boxuan Dong (董博瑄)**, a PhD student at the School of AI for Science, Peking University, advised by Prof. Weihao Yu in IPP Lab.
+Personal academic homepage for **Boxuan Dong (董博瑄)**, a PhD student at the School of AI for Science, Peking University, advised by Prof. Weihao Yu in IPP Lab. Research interests: embodied AI, multimodal large language models, and AI agents.
 
-**Website:** [dongbx0125.github.io](https://dongbx0125.github.io/)
+**Website:** [dongbx0125.github.io](https://dongbx0125.github.io/) · **Email:** [dobx2622@stu.pku.edu.cn](mailto:dobx2622@stu.pku.edu.cn) · **bilibili:** [356554489](https://space.bilibili.com/356554489)
 
-The site uses plain HTML, CSS, and JavaScript, optimized local images, and system fonts. There is no build step, package dependency, analytics, site cookie, or external font request. Audio streams directly from Bestdori after a visitor chooses to play it. All page text is in English except real people's Chinese names.
+The site uses plain HTML, CSS, JavaScript, optimized local images, and system fonts. There is no build step, package dependency, analytics, site cookie, or external font request. All page text is in English except real people's Chinese names.
 
 ## Local preview
 
-From this directory, run `python -m http.server 8000` and open [localhost:8000](http://localhost:8000). You can also open `index.html` directly.
+Run `python -m http.server 8000` from this directory and open [localhost:8000](http://localhost:8000). The site also works when opening `index.html` directly.
 
 ## Publishing
 
-In this repository, open **Settings → Pages**, select **Deploy from a branch**, then choose **main / (root)**. The `.nojekyll` file allows the static files to be served directly. No Actions workflow or package installation is required.
+GitHub Pages serves the `main` branch from the repository root. The `.nojekyll` file enables direct static-file serving.
 
 ## Editing
 
-- `index.html`: biography, research, education, hobbies, image credits, search and social metadata.
-- `styles.css`: palette and responsive layouts, with print and reduced-motion styles.
-- `script.js`: navigation highlighting, the Sāya gallery, and the Poppin’Party audio player.
-- `assets/`: optimized local images, official chibi sprite crops, cover artwork, favicon, and social sharing image. Original photo metadata is not included.
-- `assets/bestdori-manifest.json`: source URLs, card IDs, song IDs, English display titles, and image dimensions for the Bestdori resources.
+- `index.html`: biography, contact links, education, research, interests, media data, and search/social metadata.
+- `styles.css`: responsive layout, typography, player states, print, and reduced-motion styles.
+- `script.js`: navigation highlighting, gallery, shared audio controls, and playlist search.
+- `assets/`: local photographs, official character sprites, covers, and social sharing image.
+- `assets/bestdori-manifest.json`: source URLs, card and song IDs, display titles, sprite crops, and image dimensions.
+
+To change the playlist or gallery, update the `media-data` JSON block and corresponding initial HTML in `index.html`, then update the manifest. Page rendering does not depend on live API calls.
+
+When the **HOG WAM** preprint becomes available, replace `arXiv forthcoming` with its link and update the publication status. The current status is **Submitted to CVPR 2027**.
 
 ## Gallery and player
 
-The gallery contains five Sāya Yamabuki illustrations. It changes every seven seconds while visible; hovering, focusing a gallery control, or hiding the tab suspends rotation. Selecting an illustration pauses automatic rotation until **Play slideshow** is pressed. Previous/next buttons, accessible dot buttons, arrow keys, and horizontal touch swipes are supported. The system's reduced-motion preference disables automatic rotation on first load and removes animation.
+The gallery contains five Sāya Yamabuki illustrations. It rotates every seven seconds while visible, pauses on hover or focus, and suspends when the tab is hidden. Manual selection pauses rotation until the slideshow play button is pressed. Previous/next buttons, keyboard arrows, accessible dots, and touch swipes are supported. Reduced-motion preferences disable automatic rotation on initial load.
 
-The playlist contains **Star Beat!**, **Tear Drops**, **Time Lapse**, **CiRCLING**, and **Sunflower Dreams**, all by Poppin’Party. These are the game versions provided by Bestdori, not full-length album tracks. Their MP3 files are streamed from the original source and are not distributed in this repository. The player supports play/pause, track selection, previous/next, seeking, volume, mute, automatic progression through the playlist, and supported device media controls. Music continues while the visitor explores the page; it does not start on its own. The playlist stops after its final song.
+The playlist contains **28 Poppin’Party original songs**, including Star Beat!, Tear Drops, Time Lapse, CiRCLING, Sunflower Dreams, KIZUNA MUSIC♪, Returns, and Initial. These are game versions provided by Bestdori. The MP3 files stream from Bestdori after explicit visitor interaction and are not stored in this repository.
 
-The audio element has no source and requests no audio on initial page load. A source outage produces an inline retry message and a working Bestdori link. With JavaScript disabled, the biography and first illustration remain readable and a link to Bestdori's player is available.
+The header and full player control the same audio element. Both support play/pause, previous/next, and mute; the full player also provides seeking, volume adjustment, and song search. Playback advances through the playlist and stops after the final song. Supported device media controls are connected through the Media Session API.
 
-To edit the playlist or gallery, update both the `media-data` JSON block and its corresponding initial HTML in `index.html`; keep the provenance manifest in sync. No live API calls are required to render the page.
+The audio element has no source on initial load. Network errors display a concise retry message and a Bestdori link. With JavaScript disabled, the biography, images, and external listening link remain available.
 
-When the **HOG WAM** preprint is available, replace `arXiv forthcoming` with its link, and update the description and publication status. The current label is **Submitted to CVPR 2027**.
+## Sources
 
-## Research sources
+- **Portrait:** supplied by Boxuan Dong; taken at Peking University on 27 March 2026. The optimized image excludes original file metadata.
+- **ET-SEED:** [paper](https://arxiv.org/abs/2411.03990), [project](https://et-seed.github.io/), and [code](https://github.com/yuechen0614/ET-SEED). The research thumbnail comes from the official project website. ICLR 2025.
+- **HOG WAM:** submitted to CVPR 2027; arXiv forthcoming. The title tile is a typographic placeholder, not a research diagram.
+- **Sāya gallery:** after-training cards [2220](https://bestdori.com/info/cards/2220), [16](https://bestdori.com/info/cards/16), [1540](https://bestdori.com/info/cards/1540), [1056](https://bestdori.com/info/cards/1056), and [2414](https://bestdori.com/info/cards/2414). Card 1540 also appears in the faint hero background.
+- **Poppin’Party group image:** [A Sparkly Smile, card 491](https://bestdori.com/info/cards/491), before training; all five members are retained.
+- **Chibis:** official Bestdori sprite sheets `sd001004` through `sd005004`. Sāya decorates the portrait, Rimi the education section, Tae the research heading, Kasumi the group image, and Arisa the player. Arisa uses the smiling upper-right pose; the other sprites use their first poses. Sāya also supplies the header icon and favicon.
+- **Music, covers, and band logo:** Bestdori. Complete source URLs and the 28-song list are in `assets/bestdori-manifest.json`.
 
-- **ET-SEED: Efficient Trajectory-Level SE(3) Equivariant Diffusion Policy**, ICLR 2025. [Paper](https://arxiv.org/abs/2411.03990) · [Project](https://et-seed.github.io/) · [Code](https://github.com/yuechen0614/ET-SEED).
-- **HOG WAM**. Submitted to CVPR 2027; arXiv forthcoming. No unpublished paper files or results are included in this repository.
-
-## Image sources and rights
-
-- **Personal photograph:** supplied by Boxuan Dong; resized and encoded to WebP. The original photograph is not committed.
-- **Sāya Yamabuki artwork:** BanG Dream! Girls Band Party! after-training illustrations, cards [2220](https://bestdori.com/info/cards/2220), [16](https://bestdori.com/info/cards/16), [1540](https://bestdori.com/info/cards/1540), [1056](https://bestdori.com/info/cards/1056), and [2414](https://bestdori.com/info/cards/2414). The faint hero background uses card 1540.
-- **Poppin’Party group photo:** [A Sparkly Smile, card 491](https://bestdori.com/info/cards/491), before-training illustration. The entire composition is retained, including all five members.
-- **Poppin’Party chibis:** official character sprite sheets `sd001004` through `sd005004`, from Bestdori's `characters/livesd` assets. Each decoration is a cropped, transparent first pose from its original sheet. The Sāya sprite also supplies the site icon. The five members appear separately as small accents across the header, portrait, research, education, and closing sections. No generated character artwork is used.
-- **Music, covers, and band logo:** Bestdori songs [2](https://bestdori.com/info/songs/2), [4](https://bestdori.com/info/songs/4), [73](https://bestdori.com/info/songs/73), [95](https://bestdori.com/info/songs/95), and [45](https://bestdori.com/info/songs/45), plus the official `band/logo/001` image. Full source URLs are recorded in `assets/bestdori-manifest.json`.
-- **ET-SEED thumbnail:** from the [official project website](https://et-seed.github.io/static/images/teaser_v14-1.png), illustrating the owner's coauthored work. Rights remain with the authors.
-- **HOG WAM thumbnail:** decorative HTML/CSS/SVG art created for this site, not a technical diagram or research result.
-
-All BanG Dream! material is presented as a personal fan tribute. Rights remain with their respective owners; this site is not affiliated with or endorsed by BanG Dream! or Bestdori. Source attribution does not grant a general reuse license.
+BanG Dream! material is used as a personal fan tribute. Rights remain with their respective owners. This site is not affiliated with BanG Dream! or Bestdori.
 
 ## Verification
 
-The site has been rendered in Chromium at widths of 320, 390, 768, 1024, and 1440 pixels with no horizontal overflow. Browser checks cover real Bestdori audio playback, seeking, pause, volume, mute, track selection, gallery controls and keyboard navigation, reduced-motion behavior, and the JavaScript-disabled fallback. Image paths, internal anchors, and English-only page text (except real Chinese names) are also checked.
+Chromium checks cover widths of 320, 390, 768, 1024, and 1440 pixels; contact links and section order; all five body decorations; English-only text except Chinese names; real audio playback; synchronized header controls; seeking, volume, and mute; song search; rapid switching; automatic progression and final-song stop; network-error retry; gallery navigation; reduced motion; and the JavaScript-disabled fallback.
 
-An optional GitHub account profile README is in `extras/PROFILE_README.md`. To use it at `github.com/Dongbx0125`, place its contents in `README.md` of a public repository named `Dongbx0125`. This repository serves the independent GitHub Pages website.
+`extras/PROFILE_README.md` is an optional GitHub account profile README. To display it on `github.com/Dongbx0125`, use its contents in a public repository named `Dongbx0125`. This repository hosts the standalone GitHub Pages website.
