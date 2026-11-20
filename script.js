@@ -2,7 +2,6 @@
 
 document.getElementById("year").textContent = new Date().getFullYear();
 const media = JSON.parse(document.getElementById("media-data").textContent);
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 // Highlight section links without moving focus.
 const navigation = [...document.querySelectorAll('nav a[href^="#"]')];
@@ -18,17 +17,12 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll("main section[id]").forEach((section) => observer.observe(section));
 }
 
-// Gallery: lazy loading, keyboard/swipe navigation, and explicit rotation control.
+// Continuous gallery rotation, with manual arrows, keyboard, and touch navigation.
 const gallery = document.getElementById("saya-gallery");
 const galleryStage = document.getElementById("gallery-stage");
 const slides = [...gallery.querySelectorAll(".gallery-slide")];
-const dots = [...gallery.querySelectorAll(".gallery-dot")];
-const rotationButton = document.getElementById("gallery-toggle");
 let slideIndex = 0;
 let slideRequest = 0;
-let rotationEnabled = !reducedMotion.matches;
-let galleryVisible = false;
-let galleryHovered = false;
 let galleryTimer = null;
 
 gallery.querySelector(".gallery-arrows").hidden = false;
@@ -39,22 +33,14 @@ function warmSlide(index) {
   if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
   return img;
 }
-
 function syncRotation() {
   clearInterval(galleryTimer);
   galleryTimer = null;
-  rotationButton.setAttribute("aria-pressed", String(rotationEnabled));
-  const label = rotationEnabled ? "Pause slideshow" : "Play slideshow";
-  rotationButton.setAttribute("aria-label", label);
-  rotationButton.querySelector("span").textContent = label;
-  const focused = gallery.contains(document.activeElement) && document.activeElement !== rotationButton;
-  if (rotationEnabled && galleryVisible && !document.hidden && !galleryHovered && !focused) {
-    galleryTimer = setInterval(() => showSlide(slideIndex + 1), 7000);
-  }
+  // Browsers throttle background tabs; resume automatically when visible.
+  if (!document.hidden) galleryTimer = setInterval(() => showSlide(slideIndex + 1), 6000);
 }
-
 async function showSlide(requested, manual = false) {
-  if (manual) { rotationEnabled = false; syncRotation(); }
+  if (manual) syncRotation();
   const index = (requested + slides.length) % slides.length;
   const request = ++slideRequest;
   const img = warmSlide(index);
@@ -65,7 +51,7 @@ async function showSlide(requested, manual = false) {
       img.addEventListener("error", reject, { once: true });
     });
   } catch {
-    document.getElementById("gallery-announcement").textContent = "This illustration could not load. Please try another one.";
+    if (request === slideRequest && manual) document.getElementById("gallery-announcement").textContent = "Unable to load this illustration.";
     return;
   }
   if (request !== slideRequest) return;
@@ -73,35 +59,25 @@ async function showSlide(requested, manual = false) {
   slides.forEach((slide, i) => {
     slide.classList.toggle("is-active", i === index);
     slide.setAttribute("aria-hidden", String(i !== index));
-    dots[i].classList.toggle("is-active", i === index);
-    dots[i].setAttribute("aria-pressed", String(i === index));
   });
-  const info = media.slides[index];
-  document.getElementById("art-source").href = info.source;
-  if (manual) document.getElementById("gallery-announcement").textContent = info.title;
+  document.getElementById("art-source").href = media.slides[index].source;
+  if (manual) document.getElementById("gallery-announcement").textContent = media.slides[index].title;
   warmSlide((index + 1) % slides.length);
 }
-
 document.getElementById("gallery-prev").addEventListener("click", () => showSlide(slideIndex - 1, true));
 document.getElementById("gallery-next").addEventListener("click", () => showSlide(slideIndex + 1, true));
-dots.forEach((dot, i) => dot.addEventListener("click", () => showSlide(i, true)));
-rotationButton.addEventListener("click", () => { rotationEnabled = !rotationEnabled; syncRotation(); });
-gallery.addEventListener("keydown", (event) => {
+gallery.addEventListener("keydown", event => {
   if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-    event.preventDefault(); showSlide(slideIndex + (event.key === "ArrowLeft" ? -1 : 1), true);
+    event.preventDefault();
+    showSlide(slideIndex + (event.key === "ArrowLeft" ? -1 : 1), true);
   }
 });
-gallery.addEventListener("mouseenter", () => { galleryHovered = true; syncRotation(); });
-gallery.addEventListener("mouseleave", () => { galleryHovered = false; syncRotation(); });
-gallery.addEventListener("focusin", syncRotation);
-gallery.addEventListener("focusout", () => setTimeout(syncRotation, 0));
 document.addEventListener("visibilitychange", syncRotation);
-reducedMotion.addEventListener("change", () => { if (reducedMotion.matches) rotationEnabled = false; syncRotation(); });
 let swipeStart = null;
-galleryStage.addEventListener("touchstart", (event) => {
+galleryStage.addEventListener("touchstart", event => {
   swipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
 }, { passive: true });
-galleryStage.addEventListener("touchend", (event) => {
+galleryStage.addEventListener("touchend", event => {
   if (!swipeStart || !event.changedTouches.length) return;
   const dx = event.changedTouches[0].clientX - swipeStart.x;
   const dy = event.changedTouches[0].clientY - swipeStart.y;
@@ -109,13 +85,7 @@ galleryStage.addEventListener("touchend", (event) => {
   swipeStart = null;
 }, { passive: true });
 galleryStage.addEventListener("touchcancel", () => { swipeStart = null; }, { passive: true });
-if ("IntersectionObserver" in window) {
-  new IntersectionObserver((entries) => {
-    galleryVisible = entries[0].isIntersecting;
-    if (galleryVisible) warmSlide((slideIndex + 1) % slides.length);
-    syncRotation();
-  }, { threshold: .15 }).observe(gallery);
-} else { galleryVisible = true; syncRotation(); }
+warmSlide(1);
 syncRotation();
 
 // One shared audio element serves the header and full player. No audio is
@@ -136,6 +106,7 @@ let playerRequest = 0;
 let playRequested = false;
 let loading = false;
 let seeking = false;
+let loadTimer = null;
 let lastNonzeroVolume = .65;
 
 musicCard.querySelector(".player-controls").hidden = false;
@@ -214,14 +185,19 @@ function resetDisplay() {
   revealSelection();
 }
 function failPlayback() {
+  clearTimeout(loadTimer);
   ++playerRequest;
   playRequested = false;
   loading = false;
   audio.pause();
+  audio.removeAttribute("src");
+  audio.load();
+  seek.disabled = true;
   updatePlayback();
-  setMessage("Unable to load this track. Press play to retry, or listen on Bestdori.");
+  setMessage("Unable to load this track. Press play to retry, or listen on Fandom.");
 }
 function pauseMusic() {
+  clearTimeout(loadTimer);
   ++playerRequest;
   playRequested = false;
   loading = false;
@@ -230,6 +206,7 @@ function pauseMusic() {
   setMessage();
 }
 async function playMusic() {
+  clearTimeout(loadTimer);
   const request = ++playerRequest;
   playRequested = true;
   loading = true;
@@ -241,9 +218,13 @@ async function playMusic() {
   if (audio.ended) audio.currentTime = 0;
   updateMediaSession();
   updatePlayback();
+  loadTimer = setTimeout(() => {
+    if (request === playerRequest && loading) failPlayback();
+  }, 25000);
   try {
     await audio.play();
     if (request !== playerRequest) return;
+    clearTimeout(loadTimer);
     loading = false;
     updatePlayback();
   } catch (error) {
@@ -259,6 +240,7 @@ function selectTrack(requested, autoplay = false) {
     if (autoplay) playMusic();
     return;
   }
+  clearTimeout(loadTimer);
   ++playerRequest;
   playRequested = false;
   loading = false;
@@ -287,6 +269,7 @@ audio.addEventListener("loadedmetadata", () => { seek.disabled = false; updatePr
 audio.addEventListener("durationchange", updateProgress);
 audio.addEventListener("timeupdate", updateProgress);
 audio.addEventListener("playing", () => {
+  clearTimeout(loadTimer);
   if (!playRequested) { audio.pause(); return; }
   loading = false;
   setMessage();

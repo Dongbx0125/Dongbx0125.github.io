@@ -28,25 +28,25 @@ When the **HOG WAM** preprint becomes available, replace `arXiv forthcoming` wit
 
 ## Gallery and player
 
-The gallery contains five Sāya Yamabuki illustrations. It rotates every seven seconds while visible, pauses on hover or focus, and suspends when the tab is hidden. Manual selection pauses rotation until the slideshow play button is pressed. Previous/next buttons, keyboard arrows, accessible dots, and touch swipes are supported. Reduced-motion preferences disable automatic rotation on initial load.
+The gallery contains **15 Sāya Yamabuki illustrations**. It advances every six seconds, including while hovered, focused, or after manual selection. Previous/next buttons, keyboard arrows, and touch swipes remain available; there is no pause control. Hidden tabs suspend the timer and resume automatically on return. Reduced-motion preferences remove the fade animation while keeping automatic image changes.
 
-The playlist contains **28 Poppin’Party original songs**, including Star Beat!, Tear Drops, Time Lapse, CiRCLING, Sunflower Dreams, KIZUNA MUSIC♪, Returns, and Initial. These are game versions provided by Bestdori. The MP3 files stream from Bestdori after explicit visitor interaction and are not stored in this repository.
+The playlist contains **28 full-length Poppin’Party original songs**, including Star Beat!, Tear Drops, Time Lapse, CiRCLING, Sunflower Dreams, KIZUNA MUSIC♪, Returns, and Initial. Each original vocal recording was matched to its Fandom file and verified for full duration. Ogg/Vorbis audio streams from Fandom's media CDN after explicit visitor interaction; no audio files are stored in this repository. Cover artwork remains sourced from Bestdori.
 
 The header and full player control the same audio element. Both support play/pause, previous/next, and mute; the full player also provides seeking, volume adjustment, and song search. Playback advances through the playlist and stops after the final song. Supported device media controls are connected through the Media Session API.
 
-The audio element has no source on initial load. Network errors display a concise retry message and a Bestdori link. With JavaScript disabled, the biography, images, and external listening link remain available.
+The audio element has no source on initial load. Network errors display a concise retry message and a Fandom source link. With JavaScript disabled, the biography, images, and external listening link remain available.
 
 ## Sources
 
 - **Portrait:** supplied by Boxuan Dong; taken at Peking University on 27 March 2026. The optimized image excludes original file metadata.
 - **ET-SEED:** [paper](https://arxiv.org/abs/2411.03990), [project](https://et-seed.github.io/), and [code](https://github.com/yuechen0614/ET-SEED). The research thumbnail comes from the official project website. ICLR 2025.
 - **HOG WAM:** arXiv forthcoming. The title tile is a typographic placeholder, not a research diagram.
-- **Sāya gallery:** after-training cards [2220](https://bestdori.com/info/cards/2220), [16](https://bestdori.com/info/cards/16), [1540](https://bestdori.com/info/cards/1540), [1056](https://bestdori.com/info/cards/1056), and [2414](https://bestdori.com/info/cards/2414). Card 1540 also appears in the faint hero background.
+- **Sāya gallery:** 15 after-training illustrations from Bestdori, with card IDs and original asset URLs recorded in `assets/bestdori-manifest.json`. Card 1540 also appears in the faint hero background.
 - **Poppin’Party group image:** [A Sparkly Smile, card 491](https://bestdori.com/info/cards/491), before training; all five members are retained.
 - **Chibis:** official Bestdori sprite sheets `sd001004` through `sd005004`. Sāya decorates the portrait, Rimi the education section, Tae the research heading, Kasumi the interests heading, and Arisa the player. Arisa uses the smiling upper-right pose; the other sprites use their first poses. Sāya also supplies the header icon and favicon.
-- **Music, covers, and band logo:** Bestdori. Complete source URLs and the 28-song list are in `assets/bestdori-manifest.json`.
+- **Music:** full vocal recordings from [BanG Dream! Wikia](https://bandori.fandom.com/). **Covers and band logo:** Bestdori. Complete source URLs, measured durations, and the 28-song list are in `assets/bestdori-manifest.json`.
 
-BanG Dream! material is used as a personal fan tribute. Rights remain with their respective owners. This site is not affiliated with BanG Dream! or Bestdori.
+BanG Dream! material is used as a personal fan tribute. Rights remain with their respective owners. This site is not affiliated with BanG Dream!, Bestdori, or Fandom.
 
 ## Verification
 

@@ -815,3 +815,6 @@ main { --chibi-height: 100px; }
   .music-heading h3 { font-size: 23px; }
 }
 @media print { .interests-chibi { display: none; } }
+
+/* Gallery navigation stays on the artwork; attribution sits below. */
+.gallery-bottom { justify-content: flex-end; padding-block: 13px; }
